@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Welcome, {{ current_user.name or current_user.email.split('@')[0] }}!</h2>
+<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <h3 class="text-xl font-bold mb-2">Your Stats</h3>
+    <p><strong>Current Rank:</strong> #{{ current_user.id }}</p>
+    <p><strong>Codeforces Rating:</strong> {{ current_user.codeforces_rating }}</p>
+    <p><strong>LeetCode Progress:</strong> Not available</p>
+    
+    <h3 class="text-xl font-bold mt-4 mb-2">Quick Links</h3>
+    <ul class="list-disc list-inside">
+        <li><a href="{{ url_for('profile', email_prefix=current_user.email.split('@')[0]) }}" class="text-blue-600 hover:underline">Edit Profile</a></li>
+        <li><a href="{{ url_for('leaderboard') }}" class="text-blue-600 hover:underline">View Leaderboard</a></li>
+        <li><a href="{{ url_for('search') }}" class="text-blue-600 hover:underline">Search Users</a></li>
+    </ul>
+    
+    {% if current_user.github_username %}
+        <h3 class="text-xl font-bold mt-4 mb-2">GitHub Repositories</h3>
+        <p>Visit <a href="https://github.com/{{ current_user.github_username }}" target="_blank" class="text-blue-600 hover:underline">{{ current_user.github_username }}'s GitHub</a></p>
+    {% endif %}
+</div>
+{% endblock %}
